@@ -13,83 +13,79 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Login = () => {
-  const [loginInput, setLoginInput] = useState({ email: "", password: "" });
-  const [signupInput, setSignupInput] = useState({
-    name: "",
-    email: "",
-    password: "",
+  const [inputs, setInputs] = useState({
+    student: { email: "", password: "" },
+    warden: { email: "", password: "" },
+    maintenance: { email: "", password: "" },
   });
 
-  const changeHandler = (e, type) => {
+  const changeHandler = (e, role) => {
     const { name, value } = e.target;
-    if (type === "signup") {
-      setSignupInput({ ...signupInput, [name]: value });
-    } else {
-      setLoginInput({ ...loginInput, [name]: value });
-    }
+    setInputs({
+      ...inputs,
+      [role]: { ...inputs[role], [name]: value },
+    });
   };
 
   return (
-    <div className="flex items-center justify-center h-[100vh]">
-      <Tabs defaultValue="login" className="w-[400px]">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="signup">Signup</TabsTrigger>
-          <TabsTrigger value="login">Login</TabsTrigger>
+    <div className="flex items-center justify-center h-screen">
+      <Tabs defaultValue="student" className="w-[400px]">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="student" className="cursor-pointer">
+            Student
+          </TabsTrigger>
+          <TabsTrigger value="warden" className="cursor-pointer">
+            Warden
+          </TabsTrigger>
+          <TabsTrigger value="maintenance" className="cursor-pointer">
+            Maintenance
+          </TabsTrigger>
         </TabsList>
-        <TabsContent value="signup">
+
+        {/* Student Login */}
+        <TabsContent value="student">
           <Card>
             <CardHeader>
-              <CardTitle>Signup</CardTitle>
+              <CardTitle>Student Login</CardTitle>
               <CardDescription>
-                Create a new account and click signup when you're done.
+                Login as a student using your credentials.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="space-y-1">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  type="text"
-                  value={signupInput.name}
-                  name="name"
-                  placeholder="Enter your name"
-                  required={true}
-                  onChange={(e) => changeHandler(e, "signup")}
-                />
-              </div>
-              <div className="space-y-1">
                 <Label htmlFor="email">Email</Label>
                 <Input
-                  type="text"
-                  value={signupInput.email}
                   name="email"
-                  placeholder="Enter your email"
-                  onChange={(e) => changeHandler(e, "signup")}
-                  required={true}
+                  type="email"
+                  value={inputs.student.email}
+                  onChange={(e) => changeHandler(e, "student")}
+                  required
                 />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="password">Password</Label>
                 <Input
-                  type="password"
-                  value={signupInput.password}
                   name="password"
-                  placeholder="Enter your password"
-                  onChange={(e) => changeHandler(e, "signup")}
-                  required={true}
+                  type="password"
+                  value={inputs.student.password}
+                  onChange={(e) => changeHandler(e, "student")}
+                  required
                 />
               </div>
             </CardContent>
             <CardFooter>
-              <Button>Signup</Button>
+              <Button>Login</Button>
             </CardFooter>
           </Card>
         </TabsContent>
-        <TabsContent value="login">
+
+        {/* Warden Login */}
+        <TabsContent value="warden">
           <Card>
             <CardHeader>
-              <CardTitle>Login</CardTitle>
+              <CardTitle>Warden Login</CardTitle>
               <CardDescription>
-                Login here. After signup, you'll be logged in.
+                Login as a warden using your credentials.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
@@ -97,20 +93,57 @@ const Login = () => {
                 <Label htmlFor="email">Email</Label>
                 <Input
                   name="email"
-                  value={loginInput.email}
                   type="email"
-                  required={true}
-                  onChange={(e) => changeHandler(e, "login")}
+                  value={inputs.warden.email}
+                  onChange={(e) => changeHandler(e, "warden")}
+                  required
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="passwrod">Password</Label>
+                <Label htmlFor="password">Password</Label>
                 <Input
                   name="password"
-                  value={loginInput.password}
                   type="password"
-                  required={true}
-                  onChange={(e) => changeHandler(e, "login")}
+                  value={inputs.warden.password}
+                  onChange={(e) => changeHandler(e, "warden")}
+                  required
+                />
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button>Login</Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+
+        {/* Maintenance Staff Login */}
+        <TabsContent value="maintenance">
+          <Card>
+            <CardHeader>
+              <CardTitle>Maintenance Staff Login</CardTitle>
+              <CardDescription>
+                Login as a maintenance staff member using your credentials.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div className="space-y-1">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  name="email"
+                  type="email"
+                  value={inputs.maintenance.email}
+                  onChange={(e) => changeHandler(e, "maintenance")}
+                  required
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  name="password"
+                  type="password"
+                  value={inputs.maintenance.password}
+                  onChange={(e) => changeHandler(e, "maintenance")}
+                  required
                 />
               </div>
             </CardContent>
